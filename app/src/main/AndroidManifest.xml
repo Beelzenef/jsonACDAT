@@ -16,6 +16,16 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+        <activity android:name=".PrimitivaActivity">
+        </activity>
+        <activity android:name=".ContactosActivity">
+        </activity>
+        <activity android:name=".CreacionActivity">
+        </activity>
+        <activity android:name=".RetrofitActivity">
+        </activity>
+        <activity android:name=".ContactosGSONActivity">
+        </activity>
     </application>
 
 </manifest>
