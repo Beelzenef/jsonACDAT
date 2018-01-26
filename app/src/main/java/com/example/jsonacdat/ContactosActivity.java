@@ -96,6 +96,10 @@ public class ContactosActivity extends AppCompatActivity implements AdapterView.
         Contacto c = listaContactos.get(position);
         Toast.makeText(getApplicationContext(), "Movil: " + c.getTelefonos().getMovil(),
                 Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), "Casa: " + c.getTelefonos().getCasa(),
+                Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), "Trabajo: " + c.getTelefonos().getTrabajo(),
+                Toast.LENGTH_SHORT).show();
     }
 
 

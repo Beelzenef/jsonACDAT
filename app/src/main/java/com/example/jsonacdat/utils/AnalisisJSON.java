@@ -45,27 +45,29 @@ public class AnalisisJSON {
         ArrayList<Contacto> listaContactos = new ArrayList<>();
 
         JSONArray jsonContenido;
-        JSONObject item;
+        JSONObject contacto;
+        JSONObject telefono;
         jsonContenido = new JSONArray(texto.getString("contactos"));
 
         for (int i = 0; i < jsonContenido.length(); i++) {
-            item = jsonContenido.getJSONObject(i);
 
-            Contacto contacto = new Contacto();
-            Telefono tlf = new Telefono();
+            contacto = jsonContenido.getJSONObject(0);
 
-            contacto.setNombre(item.getString("nombre"));
-            contacto.setDireccion(item.getString("direccion"));
-            contacto.setEmail(item.getString("email"));
+            Contacto nuevoContacto = new Contacto();
+            nuevoContacto.setNombre(contacto.getString("nombre"));
+            nuevoContacto.setDireccion(contacto.getString("direccion"));
+            nuevoContacto.setEmail(contacto.getString("email"));
 
-            JSONObject jsonTelefonos = new JSONObject(texto.getString("telefono"));
-                tlf.setCasa(jsonTelefonos.getString("casa"));
-                tlf.setMovil(jsonTelefonos.getString("movil"));
-                tlf.setTrabajo(jsonTelefonos.getString("trabajo"));
+            telefono = contacto.getJSONObject("telefono");
 
-                contacto.setTelefonos(tlf);
+            Telefono nuevosTelefonos = new Telefono();
+            nuevosTelefonos.setCasa(telefono.getString("casa"));
+            nuevosTelefonos.setMovil(telefono.getString("movil"));
+            nuevosTelefonos.setTrabajo(telefono.getString("trabajo"));
 
-            listaContactos.add(contacto);
+            nuevoContacto.setTelefonos(nuevosTelefonos);
+
+            listaContactos.add(nuevoContacto);
         }
         return listaContactos;
     }
