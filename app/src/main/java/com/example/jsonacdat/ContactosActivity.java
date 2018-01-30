@@ -22,7 +22,7 @@ import cz.msebera.android.httpclient.Header;
 
 public class ContactosActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
-    public static final String WEB = "http://alumno.mobi/~alumno/superior/guzman/contactos.json";
+    public static final String WEB = "http://alumno.mobi/superior/guzman/contactos.json";
 
     ListView lista;
     ArrayList<Contacto> listaContactos;
@@ -34,6 +34,7 @@ public class ContactosActivity extends AppCompatActivity implements AdapterView.
         setContentView(R.layout.activity_contactos);
 
         lista = (ListView) findViewById(R.id.listView);
+        lista.setOnItemClickListener(this);
     }
 
     public void onClick_obtenerContactos(View v) {
@@ -93,14 +94,7 @@ public class ContactosActivity extends AppCompatActivity implements AdapterView.
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Contacto c = listaContactos.get(position);
-        Toast.makeText(getApplicationContext(), "Movil: " + c.getTelefonos().getMovil(),
-                Toast.LENGTH_SHORT).show();
-        Toast.makeText(getApplicationContext(), "Casa: " + c.getTelefonos().getCasa(),
-                Toast.LENGTH_SHORT).show();
-        Toast.makeText(getApplicationContext(), "Trabajo: " + c.getTelefonos().getTrabajo(),
+        Toast.makeText(ContactosActivity.this, "Movil: " + listaContactos.get(position).getTelefonos().getMovil(),
                 Toast.LENGTH_SHORT).show();
     }
-
-
 }

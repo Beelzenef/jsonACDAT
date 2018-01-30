@@ -2,11 +2,14 @@ package com.example.jsonacdat;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -63,8 +66,19 @@ public class PrimitivaActivity extends AppCompatActivity {
 
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        txtV_Primitiva.setText("Se ha producido un error :(");
+                        StringBuilder message = new StringBuilder();
+                        NetworkResponse response = error.networkResponse;
+                        if(response != null && response.data != null)
+                            message.append("Error: " + response.statusCode);
+                        else {
+                            String errorMessage = error.getClass().getSimpleName();
+                            if(!TextUtils.isEmpty(errorMessage))
+                                message.append("Error: " + errorMessage);
 
+                            else
+                                message.append("Error de conexión con Volley");
+                        }
+                        showMessage(message.toString());
                     }
                 });
 
@@ -83,5 +97,9 @@ public class PrimitivaActivity extends AppCompatActivity {
         if (mRequestQueue != null) {
             mRequestQueue.cancelAll(TAG);
         }
+    }
+
+    private void showMessage(String s) {
+        Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
     }
 }
