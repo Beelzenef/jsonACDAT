@@ -1,12 +1,20 @@
 package com.example.jsonacdat.utils;
 
+import android.os.Environment;
+import android.util.Log;
+
 import com.example.jsonacdat.pojo.Contacto;
+import com.example.jsonacdat.pojo.Noticia;
 import com.example.jsonacdat.pojo.Telefono;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 
 /**
@@ -71,5 +79,28 @@ public class AnalisisJSON {
             listaContactos.add(nuevoContacto);
         }
         return listaContactos;
+    }
+
+    public static void escribirJSON(ArrayList<Noticia> noticias, String fichero) throws IOException, JSONException
+    {
+        OutputStreamWriter out;
+        File miFichero;
+        JSONObject objeto;
+        JSONObject rss;
+        JSONArray lista;
+        miFichero = new File(Environment.getExternalStorageDirectory().getAbsolutePath(), fichero);
+        out = new FileWriter(miFichero);
+        //crear objeto JSON
+        objeto = new JSONObject();
+        objeto.put("web", "http://www.alejandrosuarez.es/");
+        objeto.put("link", "http://www.alejandrosuarez.es/feed/");
+
+        rss = new JSONObject();
+
+        lista = new JSONArray();
+        out.write(rss.toString(4)); //tabulación de 4 caracteres
+        out.flush();
+        out.close();
+        Log.i("info", objeto.toString());
     }
 }

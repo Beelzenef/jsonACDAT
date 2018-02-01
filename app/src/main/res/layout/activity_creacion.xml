@@ -7,4 +7,11 @@
     android:layout_height="match_parent"
     tools:context="com.example.jsonacdat.CreacionActivity">
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Descargar feed"
+        android:id="@+id/btn_DescargarFeedToJSON"
+        android:onClick="onClick_descargarFeedToJSON"/>
+
 </android.support.constraint.ConstraintLayout>
