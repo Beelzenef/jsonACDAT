@@ -10,15 +10,12 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.jsonacdat.network.RestClient;
-import com.example.jsonacdat.pojo.Contacto;
-import com.example.jsonacdat.pojo.Person;
-import com.example.jsonacdat.utils.AnalisisJSON;
+import com.example.jsonacdat.pojo.ContactoGSON;
+import com.example.jsonacdat.pojo.ListaContactosGSON;
 import com.google.gson.Gson;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.json.JSONObject;
-
-import java.util.ArrayList;
 
 import cz.msebera.android.httpclient.Header;
 
@@ -27,10 +24,9 @@ public class ContactosGSONActivity extends AppCompatActivity implements AdapterV
     public static final String WEB = "http://alumno.mobi/superior/guzman/contactos.json";
 
     ListView lista;
-    ArrayList<Contacto> listaContactos;
-    ArrayAdapter<Contacto> adapter;
 
-    Person listaPersonas;
+    ArrayAdapter<ContactoGSON> adapter;
+    ListaContactosGSON lectorContactosGSON;
 
     Gson gson;
 
@@ -38,6 +34,8 @@ public class ContactosGSONActivity extends AppCompatActivity implements AdapterV
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contactos);
+
+        lectorContactosGSON = new ListaContactosGSON();
 
         gson = new Gson();
 
@@ -66,13 +64,13 @@ public class ContactosGSONActivity extends AppCompatActivity implements AdapterV
             }
 
             @Override
-            public void onSuccess(int statusCode, Header[] headers, String responseString) {
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 try {
                     progreso.dismiss();
-                    listaPersonas = (Person) gson.fromJson(responseString, Person.class);
+                    lectorContactosGSON = (ListaContactosGSON) gson.fromJson(response.toString(), ListaContactosGSON.class);
                     mostrar();
                 } catch (Exception e) {
-                    Toast.makeText(ContactosGSONActivity.this, "¡Error al mostrar contactos! :(",
+                    Toast.makeText(ContactosGSONActivity.this, "Error al leer contactos D:",
                             Toast.LENGTH_SHORT).show();
                 }
             }
@@ -87,14 +85,15 @@ public class ContactosGSONActivity extends AppCompatActivity implements AdapterV
     }
 
     private void mostrar() {
-        if (listaContactos != null)
+        if (lectorContactosGSON != null)
             if (adapter == null) {
-                adapter = new ArrayAdapter<Contacto>(this, android.R.layout.simple_list_item_1, listaContactos);
+                adapter = new ArrayAdapter<ContactoGSON>(this, android.R.layout.simple_list_item_1,
+                        lectorContactosGSON.getContacts());
                 lista.setAdapter(adapter);
             }
             else {
                 adapter.clear();
-                adapter.addAll(listaPersonas.getContacts());
+                adapter.addAll(lectorContactosGSON.getContacts());
             }
         else
             Toast.makeText(getApplicationContext(), "Error al crear la lista", Toast.LENGTH_SHORT).show();
@@ -102,7 +101,8 @@ public class ContactosGSONActivity extends AppCompatActivity implements AdapterV
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Toast.makeText(ContactosGSONActivity.this, "Movil: " + listaContactos.get(position).getTelefonos().getMovil(),
+        Toast.makeText(ContactosGSONActivity.this,
+                "Movil: " + lectorContactosGSON.getContacts().get(position).getPhone().getMovil(),
                 Toast.LENGTH_SHORT).show();
     }
 }

@@ -54,4 +54,8 @@ public class ContactoGSON {
         this.phone = phone;
     }
 
+    @Override
+    public String toString() {
+        return this.name;
+    }
 }

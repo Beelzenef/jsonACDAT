@@ -10,17 +10,17 @@ import java.util.List;
  *
  */
 
-public class Person {
+public class ListaContactosGSON {
 
     @SerializedName("contactos")
     @Expose
-    private List<Contacto> contacts = null;
+    private List<ContactoGSON> contacts = null;
 
-    public List<Contacto> getContacts() {
+    public List<ContactoGSON> getContacts() {
         return contacts;
     }
 
-    public void setContacts(List<Contacto> contacts) {
+    public void setContacts(List<ContactoGSON> contacts) {
         this.contacts = contacts;
     }
 
