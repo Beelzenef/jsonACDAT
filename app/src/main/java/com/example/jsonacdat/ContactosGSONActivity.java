@@ -76,12 +76,47 @@ public class ContactosGSONActivity extends AppCompatActivity implements AdapterV
             }
 
             @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                super.onFailure(statusCode, headers, responseString, throwable);
+
                 progreso.dismiss();
-                Toast.makeText(ContactosGSONActivity.this, "¡Ha fallado la descarga! :(",
-                        Toast.LENGTH_SHORT).show();
+
+                StringBuilder message = new StringBuilder();
+                message.append("Ha fallado la descarga");
+
+                if (throwable != null) {
+                    message.append(", " + throwable.getMessage());
+                    if (responseString != null) {
+                        message.append("\n" + responseString);
+                    }
+                }
+
+                showMsg(message.toString());
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+
+                progreso.dismiss();
+
+                StringBuilder message = new StringBuilder();
+                message.append("Ha fallado la descarga");
+
+                if (throwable != null) {
+                    message.append(", " + throwable.getMessage());
+                    if (errorResponse != null) {
+                        message.append("\n" + errorResponse.toString());
+                    }
+                }
+
+                showMsg(message.toString());
             }
         });
+    }
+
+    private void showMsg(String s) {
+        Toast.makeText(ContactosGSONActivity.this, s, Toast.LENGTH_SHORT).show();
     }
 
     private void mostrar() {
