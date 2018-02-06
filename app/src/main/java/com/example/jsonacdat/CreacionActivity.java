@@ -23,11 +23,11 @@ import cz.msebera.android.httpclient.Header;
 
 public class CreacionActivity extends AppCompatActivity {
 
-    public static final String WEB = "http://www.alejandrosuarez.es/feed/";
+    public static final String CANAL = "https://geekstorming.wordpress.com/feed/";
 
     public static final String RESULTADO_JSON = "resultado.json";
     public static final String RESULTADO_GSON = "resultado_gson.json";
-    public static final String TEMPORAL = "alejandro.xml";
+    public static final String TEMPORAL = "feed.xml";
 
     ArrayList<Noticia> noticias;
 
@@ -41,7 +41,7 @@ public class CreacionActivity extends AppCompatActivity {
     public void onClick_descargarFeedToJSON(View v) {
         switch (v.getId()) {
             case R.id.btn_DescargarFeedToJSON:
-                descarga(WEB, TEMPORAL);
+                descarga(CANAL, TEMPORAL);
                 break;
         }
     }
@@ -62,6 +62,7 @@ public class CreacionActivity extends AppCompatActivity {
                     progreso.dismiss();
                     noticias = AnalisisXML.analizarNoticias(file);
                     // Guardar en fichero
+                    AnalisisJSON.escribirJSON(noticias, RESULTADO_JSON);
                 } catch (Exception e) {
                     Toast.makeText(CreacionActivity.this, "¡Error! :(",
                             Toast.LENGTH_SHORT).show();

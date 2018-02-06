@@ -92,12 +92,25 @@ public class AnalisisJSON {
         out = new FileWriter(miFichero);
         //crear objeto JSON
         objeto = new JSONObject();
-        objeto.put("web", "http://www.alejandrosuarez.es/");
-        objeto.put("link", "http://www.alejandrosuarez.es/feed/");
+        objeto.put("web", "https://geekstorming.wordpress.com/");
+        objeto.put("link", "https://geekstorming.wordpress.com/feed");
 
         rss = new JSONObject();
 
         lista = new JSONArray();
+
+        for (int i = 0; i < noticias.size(); i++) {
+            JSONObject titular = new JSONObject();
+            titular.put("titulo", noticias.get(i).getTitle());
+            titular.put("fecha", noticias.get(i).getPubDate());
+            titular.put("link", noticias.get(i).getLink());
+            titular.put("descripcion", noticias.get(i).getDescription());
+
+            lista.put(titular);
+        }
+
+        objeto.put("titulares", lista);
+        rss.put("rss", objeto);
         out.write(rss.toString(4)); //tabulación de 4 caracteres
         out.flush();
         out.close();
