@@ -1,10 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.jsonacdat.RetrofitActivity">
+    tools:context="com.example.jsonacdat.RetrofitActivity"
+    android:orientation="vertical">
 
-</android.support.constraint.ConstraintLayout>
+    <EditText
+        android:id="@+id/edT_URLRepo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="beelzenef"/>
+
+    <Button
+        android:id="@+id/btn_DescargarRepo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Descargar repositorios"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+</LinearLayout>
